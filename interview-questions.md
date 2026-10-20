@@ -204,32 +204,37 @@ Questions collected from the last 2 months of interviews, ordered **basics → a
 | 194 | AI | What is RAG (Retrieval-Augmented Generation) and how does it work? |
 | 195 | AI | RAG vs fine-tuning vs tools vs long context — when to use which? |
 | 196 | AI | LLM gateways and model routing (e.g. OpenRouter), and agent runtimes |
-| 197 | HR | Tell me about yourself |
-| 198 | HR | Explain your project / architecture |
-| 199 | HR | Tell me about a difficult technical problem you solved |
-| 200 | HR | How do you review code and ensure code quality? |
-| 201 | HR | How do you handle a disagreement with a teammate? |
-| 202 | HR | How do you guide or mentor junior developers? |
-| 203 | HR | How do you work in Agile/Scrum, and how do you estimate tasks? |
-| 204 | HR | How do you handle a production bug? |
-| 205 | HR | How do you prioritise tasks and work with designers/product? |
-| 206 | HR | A developer wants to add a new library. How do you decide? |
-| 207 | HR | How do you use AI tools like Claude in development? |
-| 208 | HR | What does first-principles thinking mean in software engineering? |
-| 209 | HR | How do you feel about compensation that includes equity? |
-| 210 | HR | Why are you looking for a change? |
-| 211 | HR | What do you say when you don't know the answer (e.g. an AWS or Kubernetes question)? |
-| 212 | Leadership | Senior Developer vs Tech Lead — and what is your leadership style? |
-| 213 | Leadership | A developer keeps missing deadlines. What do you do? |
-| 214 | Leadership | Two team members are in conflict, or disagree on architecture. How do you handle it? |
-| 215 | Leadership | How do you handle a developer who is technically stronger than you? |
-| 216 | Leadership | The team is going to miss a deadline, or you're pressured to deliver faster. What do you do? |
-| 217 | Leadership | How do you report progress to a project manager or stakeholders? |
-| 218 | Leadership | How do you handle technical debt? |
-| 219 | Leadership | What is a skill matrix and how would you use it? |
-| 220 | Leadership | You have 5 developers — one strong, two average, two junior — and a critical project with a tight deadline. How do you assign the work? |
-| 221 | Leadership | Why should we hire you for this lead role? |
-| 222 | Leadership | What questions should you ask the interviewer? |
+| 197 | Assessment | Coding tasks I've been given in assessments — and where the answers are |
+| 198 | Assessment | Polyfills: write your own `map`, `filter`, `reduce`, `bind` and `Promise.all` |
+| 199 | Assessment | Implement it yourself: deep clone, memoize, once, EventEmitter, compose/pipe |
+| 200 | Assessment | Output-prediction questions (what does this print?) |
+| 201 | Assessment | React machine-coding round: build a searchable, paginated user table |
+| 202 | HR | Tell me about yourself |
+| 203 | HR | Explain your project / architecture |
+| 204 | HR | Tell me about a difficult technical problem you solved |
+| 205 | HR | How do you review code and ensure code quality? |
+| 206 | HR | How do you handle a disagreement with a teammate? |
+| 207 | HR | How do you guide or mentor junior developers? |
+| 208 | HR | How do you work in Agile/Scrum, and how do you estimate tasks? |
+| 209 | HR | How do you handle a production bug? |
+| 210 | HR | How do you prioritise tasks and work with designers/product? |
+| 211 | HR | A developer wants to add a new library. How do you decide? |
+| 212 | HR | How do you use AI tools like Claude in development? |
+| 213 | HR | What does first-principles thinking mean in software engineering? |
+| 214 | HR | How do you feel about compensation that includes equity? |
+| 215 | HR | Why are you looking for a change? |
+| 216 | HR | What do you say when you don't know the answer (e.g. an AWS or Kubernetes question)? |
+| 217 | Leadership | Senior Developer vs Tech Lead — and what is your leadership style? |
+| 218 | Leadership | A developer keeps missing deadlines. What do you do? |
+| 219 | Leadership | Two team members are in conflict, or disagree on architecture. How do you handle it? |
+| 220 | Leadership | How do you handle a developer who is technically stronger than you? |
+| 221 | Leadership | The team is going to miss a deadline, or you're pressured to deliver faster. What do you do? |
+| 222 | Leadership | How do you report progress to a project manager or stakeholders? |
+| 223 | Leadership | How do you handle technical debt? |
+| 224 | Leadership | What is a skill matrix and how would you use it? |
+| 225 | Leadership | You have 5 developers — one strong, two average, two junior — and a critical project with a tight deadline. How do you assign the work? |
+| 226 | Leadership | Why should we hire you for this lead role? |
+| 227 | Leadership | What questions should you ask the interviewer? |
 
 ---
 
@@ -419,7 +424,7 @@ Why it matters:
 - **SEO** — search engines understand the page structure.
 - **Readability** — easier for developers to maintain.
 
-Also semantic: use `<button>` for actions and `<a>` for navigation — not `<div onClick>` (a div isn't focusable with the keyboard or announced as a button).
+Also semantic: use `<button>` for actions and `<a>` for navigation — not `<div onClick>` (example → Q11).
 
 > **Interview answer:** Semantic HTML uses tags that describe meaning — `header`, `nav`, `main`, `article`, `section`, `aside`, `footer` — which improves accessibility, SEO and readability compared to generic divs.
 
@@ -2437,17 +2442,7 @@ const ev = new Car("Tata", { powertrain: new ElectricMotor(), gps: new Gps() });
 
 **Use inheritance when** there's a true, stable IS-A relationship with shared behaviour (e.g. `AppError` → `NotFoundError`, framework base classes). **Keep it shallow** (1–2 levels).
 
-**Dependency injection** = pass dependencies in instead of creating them inside:
-
-```js
-// ❌ hard-coded — can't swap or test
-class OrderService { constructor() { this.payments = new StripeClient(); } }
-
-// ✅ injected — swap providers, use a fake in tests (SOLID "D", Q146)
-class OrderService { constructor(payments) { this.payments = payments; } }
-new OrderService(new StripeClient());
-new OrderService({ charge: async () => ({ id: "test" }) }); // test double
-```
+**Dependency injection** = pass dependencies in instead of creating them inside, so you can swap providers and use fakes in tests — like the `Car` above receiving its powertrain (typed `OrderService` example → Q146).
 
 **React is built on composition** — not inheritance: `children`, props, render props, custom hooks. React docs explicitly recommend composition over component inheritance.
 
@@ -2507,15 +2502,7 @@ document.cookie = "lang=en; max-age=86400; path=/"; // 1 day
 document.cookie; // "lang=en; ..." — one string of all cookies, you parse it yourself
 ```
 
-Login flow:
-
-```
-Login → server responds:
-  Set-Cookie: sessionId=abc123; HttpOnly; Secure; SameSite=Lax
-→ browser stores it
-→ every request sends: Cookie: sessionId=abc123
-→ server knows who you are
-```
+On login the server answers with `Set-Cookie: sessionId=abc123; HttpOnly; Secure; SameSite=Lax`, and the browser sends it back on every request (full session flow → Q141).
 
 | Flag | Protects against |
 |---|---|
@@ -2554,8 +2541,7 @@ Two tabs open → each has its own progress
 
 Uses: multi-step forms, checkout progress, OTP flow, one-time banners.
 
-**Security question — store a JWT in localStorage?**
-Not ideally. Any JS on the page can read localStorage, so one **XSS** bug leaks the token. Prefer an `HttpOnly; Secure; SameSite` cookie — JS can't read it and the browser sends it automatically.
+**Security question — store a JWT in localStorage?** Not ideally — any script can read it, so one XSS bug leaks the token (where to store tokens → Q111).
 
 **Practical — React dark mode that persists:**
 
@@ -2771,7 +2757,7 @@ src/ (many modules: .tsx, .css, images, node_modules)
 | Rollup | Great for libraries (clean ES module output) |
 
 **Practical tips:**
-- Check bundle size with an analyzer; replace heavy libraries; import only what you use (`import debounce from "lodash/debounce"`).
+- Check bundle size with an analyzer and trim heavy libraries (→ Q110).
 - Libraries should ship ES modules and mark `"sideEffects": false` so they tree-shake.
 - Lazy-load routes and heavy widgets; preload what's needed for first paint.
 - In Next.js, the framework configures the bundler for you (Q123).
@@ -3247,8 +3233,7 @@ unique[1]; // 15
 ```
 
 Points to mention:
-- Use `(a, b) => b - a` — default `sort()` compares as strings (`[10, 9, 1].sort()` → `[1, 10, 9]`).
-- Copy with `[...arr]` before sorting — `sort()` mutates.
+- Sort traps: default `sort()` compares strings and mutates the array (→ Q67).
 - Starting at `-Infinity` (not `0`) makes negative numbers work.
 
 > **Interview answer:** Track largest and second largest in one pass — O(n) time, O(1) space, no sorting, handles duplicates. Return `null` when no second largest exists.
@@ -4186,11 +4171,7 @@ type Action =
   | { type: "clear" };
 
 function cartReducer(state: CartItem[], action: Action): CartItem[] {
-  switch (action.type) {
-    case "add":    return [...state, action.item];        // action.item typed
-    case "remove": return state.filter(i => i.id !== action.id);
-    case "clear":  return [];
-  }
+  // switch (action.type) — inside each case TypeScript knows the exact action shape (reducer body → Q103)
 }
 ```
 
@@ -4206,15 +4187,7 @@ export function useAuth() {
 }
 ```
 
-**Custom hook return** — use `as const` for tuples:
-
-```tsx
-function useToggle(initial = false) {
-  const [on, setOn] = useState(initial);
-  const toggle = () => setOn(v => !v);
-  return [on, toggle] as const; // readonly [boolean, () => void], not (boolean | (() => void))[]
-}
-```
+**Custom hook return** — a hook returning a tuple (like `useToggle`, Q102) needs `as const`: `return [on, toggle] as const;` gives `readonly [boolean, () => void]` instead of the useless `(boolean | (() => void))[]`.
 
 Avoid `React.FC` for new code is no longer a strict rule (it no longer adds implicit `children`), but plain functions with typed props are the common style.
 
@@ -4875,25 +4848,11 @@ function FAQ() {
 }
 ```
 
-**Practical — data fetching hook:**
+**Practical — data fetching hook:** move the loading/error/abort logic from Q101 into a hook keyed on the URL, so every component reuses it:
 
 ```jsx
 function useFetch(url) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    setLoading(true);
-    fetch(url, { signal: controller.signal })
-      .then(res => res.json())
-      .then(setData)
-      .catch(err => { if (err.name !== "AbortError") setError(err); })
-      .finally(() => setLoading(false));
-    return () => controller.abort();
-  }, [url]);
-
+  // the data/loading/error state + useEffect from Q101, with [url] as the dependency
   return { data, loading, error };
 }
 
@@ -5845,9 +5804,7 @@ Trap: `const store = useCartStore()` with no selector subscribes to **everything
 | **Selector** | Function that reads/derives data from state: `state => state.cart.items` |
 | **Middleware** | Code between dispatch and reducer — async logic, logging (thunk is one) |
 
-```
-component → dispatch(action) → middleware → reducer → new state in store → subscribed components re-render
-```
+Flow (as in Q119, with middleware in between): component → dispatch → middleware → reducer → store → re-render.
 
 **Why reducers must be pure and state immutable:**
 - Same input → same output: predictable, testable, enables **time-travel debugging** in Redux DevTools.
@@ -6228,7 +6185,6 @@ Note: in Next.js 15+, `fetch` is **not cached by default** — opt in with `cach
 | Large images | `next/image` (resizing, WebP/AVIF, lazy loading), `priority` only on the LCP image, correct `sizes` |
 | Fonts shifting layout | `next/font` — self-hosted, no layout shift |
 | Third-party scripts (analytics, chat, ads) | `next/script` with `strategy="lazyOnload"` or `afterInteractive`; remove unused ones |
-| Heavy dependencies | Replace (moment → dayjs), import only what's needed, check with bundle analyzer |
 | Slow navigation | `<Link>` prefetching, route-level code splitting (automatic) |
 | Global latency | CDN / edge caching for static assets and pages |
 
@@ -6240,7 +6196,7 @@ const RevenueChart = dynamic(() => import("./RevenueChart"), {
 });
 ```
 
-Then **measure again** — confirm LCP, INP and CLS actually improved.
+Then **measure again** — confirm LCP, INP and CLS actually improved. (General React techniques — re-renders, virtualization, trimming heavy libraries → Q110.)
 
 > **Interview answer:** I measure with Lighthouse, real-user Web Vitals and the bundle analyzer, then fix the actual bottleneck: keep more code in Server Components and lazy-load heavy client widgets, fetch in parallel and cache with ISR or revalidation, stream slow sections with Suspense, optimise images, fonts and third-party scripts, and fix slow APIs with indexes, pagination and caching — then re-measure.
 
@@ -6813,14 +6769,7 @@ app.get("/report", (req, res) => {
 ```
 
 **Fixes:**
-1. **Background job** — return immediately, process elsewhere:
-   ```js
-   app.post("/reports", async (req, res) => {
-     const job = await reportQueue.add("generate", { userId: req.user.id }); // BullMQ
-     res.status(202).json({ jobId: job.id, status: "processing" });
-   });
-   // client polls GET /reports/:jobId, or gets a websocket/email notification
-   ```
+1. **Background job** — return `202` with a job ID right away and generate the report in a worker (→ Q144).
 2. **Worker threads** (`node:worker_threads` / Piscina pool) for CPU work inside the same service.
 3. Stream large data instead of loading it all into memory.
 4. Split huge loops into chunks with `setImmediate` (last resort).
@@ -6941,7 +6890,7 @@ Client → CDN/LB → Node (middleware, logic, serialization) → DB queries →
 | One process on one core | Cluster/PM2 or more containers + load balancer |
 
 **3. "CPU suddenly 100% after a deploy":**
-1. Protect production first — **roll back** if the deploy is clearly the cause (Q204).
+1. Protect production first — **roll back** if the deploy is clearly the cause (Q209).
 2. Check which endpoints/instances; compare traffic vs code change.
 3. CPU profile (`--inspect`, `--cpu-prof`, clinic flame) to find the hot function.
 4. Fix, add a regression test/alert, redeploy.
@@ -7073,7 +7022,7 @@ The payload is **Base64-encoded, not encrypted** — anyone can read it. Never p
 **Common production setup (best of both):**
 - **Short-lived access token** (~15 min JWT) + **long-lived refresh token** (HttpOnly, Secure, SameSite cookie), stored/hashed server-side so it can be **revoked**.
 - **Refresh token rotation** — each use issues a new refresh token; reuse of an old one signals theft → revoke the whole family.
-- Browser storage: HttpOnly cookies, not localStorage (XSS) — Q62. Cookies need CSRF protection (SameSite + CSRF token).
+- Browser storage → Q111. Cookies need CSRF protection (SameSite + CSRF token).
 - Verify `exp`, `iss`, `aud`, and the algorithm (reject `alg: none`); keep signing keys secret and rotatable.
 
 (React-side flow → Q111.)
@@ -7123,7 +7072,7 @@ Details: scope keys per user, expire them after e.g. 24 hours, reject the same k
 **Related patterns:**
 - **Unique constraints** as a natural guard (e.g. one order per cart ID).
 - **Idempotent consumers** for queues/webhooks — messages can arrive **more than once**; store processed event IDs.
-- **Distributed transfers** — when a DB transaction can't cover everything (e.g. DB + payment provider + email), use the **outbox pattern** (write the event in the same DB transaction, a worker publishes it) plus **reconciliation** jobs to fix mismatches. (Single-DB transactions → Q157.)
+- **Distributed transfers** — when one DB transaction can't cover everything, use the outbox pattern and reconciliation jobs (→ Q153; single-DB transactions → Q157).
 
 > **Interview answer:** An idempotent operation has the same result whether it runs once or many times. Because clients retry after timeouts, I protect non-idempotent operations like payments with an Idempotency-Key header: the server stores the key with the result under a unique constraint and replays the stored response for repeats. Queue and webhook consumers are made idempotent the same way, and for multi-system workflows I use the outbox pattern and reconciliation.
 
@@ -7201,11 +7150,7 @@ new Worker("emails", async job => {
 
 **Benefits:** fast API responses, **retries** with backoff, smooths traffic spikes, workers scale independently, failures don't affect users directly.
 
-**Must-haves:**
-- **Idempotent** job handlers (at-least-once delivery → duplicates happen) — Q142.
-- **Dead-letter queue** for jobs that keep failing, with alerts.
-- Job status for the UI (polling, WebSocket or notification).
-- Monitoring: queue length, processing time, failure rate (Bull Board).
+**Must-haves:** idempotent handlers (Q142), a dead-letter queue, job status for the UI, and monitoring (Bull Board) — failure handling in detail → Q152.
 
 **Event-driven architecture** — instead of one service calling five others, publish an **event**:
 
@@ -7217,10 +7162,7 @@ OrderCreated ─┬─▶ Email service (confirmation)
 
 Services are decoupled; adding a new consumer doesn't change the producer. Tools: AWS **EventBridge**/SNS+SQS, Kafka, RabbitMQ; in-process: Node `EventEmitter` (Q147).
 
-| Queue (point-to-point) | Pub/sub (events) |
-|---|---|
-| One worker handles each job | Every subscriber gets the event |
-| "Do this task" | "This happened" |
+(Queue vs pub/sub vs event log → Q152.)
 
 > **Interview answer:** I move slow or retryable work — emails, reports, media processing, third-party syncs — to a queue like BullMQ or SQS: the API returns 202 with a job ID and workers process it with retries, backoff and a dead-letter queue. Handlers must be idempotent because delivery is at-least-once. For decoupling services I publish events like `OrderCreated` that multiple consumers subscribe to.
 
@@ -7333,6 +7275,8 @@ class StripeProvider implements PaymentProvider { /* ... */ }
 class RazorpayProvider implements PaymentProvider { /* ... */ }
 // Adding PayPal = a new class, no changes to checkout code
 ```
+
+(Full Strategy example → Q147.)
 
 **L — Liskov Substitution:** any implementation must work wherever the parent/interface is expected — no surprises.
 
@@ -7893,9 +7837,10 @@ Flexible doesn't mean no rules — production apps still validate with Mongoose 
 
 ### 159. MongoDB vs PostgreSQL — which would you choose?
 
+(General SQL vs NoSQL comparison → Q158. This is the product-level comparison.)
+
 | | MongoDB | PostgreSQL |
 |---|---|---|
-| Type | NoSQL document DB | Relational SQL DB |
 | Data | BSON (binary JSON) documents in collections | Rows in tables |
 | Schema | Flexible | Strict (but has `JSONB` for flexible columns) |
 | Relationships | Embed or reference (`$lookup` for joins) | Foreign keys + JOINs |
@@ -7903,14 +7848,7 @@ Flexible doesn't mean no rules — production apps still validate with Mongoose 
 | Scaling | Built-in sharding | Vertical + read replicas, partitioning (sharding via extensions like Citus) |
 | Query | `db.users.find({ age: { $gt: 18 } })` | `SELECT * FROM users WHERE age > 18` |
 
-**MongoDB basics:**
-
-```js
-db.users.insertOne({ name: "Jaydip", age: 28, skills: ["React", "Node"] });
-db.users.find({ age: { $gt: 18 } });
-db.users.updateOne({ name: "Jaydip" }, { $set: { age: 29 } });
-db.users.deleteOne({ name: "Jaydip" });
-```
+(MongoDB queries → Q163.)
 
 **MongoDB design — embed or reference?**
 
@@ -9126,6 +9064,99 @@ How to run and deploy all this → Q181.
 **1. Docker — package each service the same way everywhere:**
 
 ```dockerfile
+# Multi-stage build: small, secure final image
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci                       # includes dev deps for the TypeScript build
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY package*.json ./
+RUN npm ci --omit=dev            # production deps only
+COPY --from=build /app/dist ./dist
+USER node                        # don't run as root
+EXPOSE 3000
+CMD ["node", "dist/server.js"]
+```
+
+Plus `.dockerignore` (`node_modules`, `.env`, `.git`). Secrets come from the environment at runtime — **never baked into images**.
+
+(Common mistake: building TypeScript after `npm ci --omit=dev` — the build tools aren't installed. Multi-stage fixes that.)
+
+**2. Kubernetes (or AWS ECS) — run and heal containers:**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: order-service }
+spec:
+  replicas: 3
+  selector: { matchLabels: { app: order-service } }
+  template:
+    metadata: { labels: { app: order-service } }
+    spec:
+      containers:
+        - name: order-service
+          image: registry.example.com/order-service:1.4.2   # pinned version, never :latest
+          ports: [{ containerPort: 3000 }]
+          resources:
+            requests: { cpu: 250m, memory: 256Mi }
+            limits:   { memory: 512Mi }
+          readinessProbe: { httpGet: { path: /ready, port: 3000 } }   # gets traffic only when ready
+          livenessProbe:  { httpGet: { path: /health, port: 3000 } }  # restarted if stuck
+          envFrom: [{ secretRef: { name: order-service-secrets } }]
+```
+
+| Concept | What it does |
+|---|---|
+| Pod | One or more containers running together |
+| Deployment | Keeps N replicas running, rolling updates, rollback |
+| Service | Stable internal address + load balancing across pods |
+| Ingress | Routes external HTTP(S) traffic to services |
+| HPA | Horizontal Pod Autoscaler — more pods when CPU/requests rise |
+| ConfigMap / Secret | Configuration and secrets injected as env/files |
+
+A crashed pod is replaced automatically. Simpler alternatives: **AWS ECS/Fargate**, Google Cloud Run, or **Vercel** for Next.js frontends; **Lambda** for event-driven/serverless pieces.
+
+**3. CI/CD pipeline:**
+
+```
+Push / Pull Request
+  → install → lint → type-check → unit + integration tests → security scan (npm audit, image scan)
+  → build Docker image tagged with the git SHA → push to registry
+  → deploy to staging → run DB migrations → E2E / smoke tests
+  → approval (if required) → deploy to production (progressively) → monitor
+```
+
+Tools: GitHub Actions, GitLab CI, Jenkins; Argo CD for GitOps on Kubernetes. **Infrastructure as Code** (Terraform, AWS CDK) so environments are reproducible.
+
+**Database migrations:** backward-compatible (**expand → migrate → contract**) — add new column, deploy code using both, backfill, then remove old — so a rollback doesn't break.
+
+**4. Release strategies:**
+
+| Strategy | How | Pros / cons |
+|---|---|---|
+| Rolling | Replace pods gradually | Default, no extra infra; two versions briefly live together |
+| **Blue-green** | Run new version beside old, switch all traffic at once | Instant rollback (switch back); double resources |
+| **Canary** | 5% traffic → watch metrics → 25% → 100% | Limits blast radius; needs good metrics |
+| **Feature flags** | Ship code dark, turn features on per user/% | Decouples deploy from release; kill switch |
+
+Auto-rollback when error rate or latency crosses a threshold.
+
+**5. Observability — the three pillars:**
+- **Logs** — structured JSON with `requestId`/`traceId`, service, level; centralized (ELK/OpenSearch, CloudWatch, Loki). **Never log** passwords, tokens, card numbers, PII.
+- **Metrics** — request rate, error rate, latency p50/p95/p99 (RED), CPU/memory, queue length, business metrics (orders/min); Prometheus + Grafana, CloudWatch, Datadog.
+- **Traces** — follow one request across services (OpenTelemetry → Jaeger/Tempo/Datadog).
+- **Alerts** on symptoms users feel (error rate, latency, orders dropping), with on-call runbooks.
+- Frontend: Sentry for errors, real-user Web Vitals.
+
+**6. Production hygiene:** health/readiness endpoints, graceful shutdown on SIGTERM, secrets manager, least-privilege IAM, backups with **tested restores**, multi-AZ for databases, staging that mirrors production.
+
+> **Interview answer:** I package each service as a small multi-stage Docker image without secrets, run it on Kubernetes or ECS with replicas, health probes, resource limits and autoscaling, and ship through a CI/CD pipeline — lint, type-check, tests, security scans, image build, staging with migrations and smoke tests, then a canary or blue-green production release with automatic rollback and feature flags. Everything is observable through structured logs with request IDs, metrics with alerts, and distributed tracing.
 
 ### 182. System design: aggregate listings from 30+ sources (ingest, normalize, deduplicate, search)
 
@@ -9655,13 +9686,7 @@ type Message = {
 
 **Why stream:** LLMs generate text token by token; a full answer can take 10–30 seconds. Streaming shows the first words in under a second — the app feels fast.
 
-**Transport options:**
-
-| Option | Direction | Use |
-|---|---|---|
-| **Streaming HTTP response / SSE** | Server → client | Most AI chat — simple, works through proxies, auto text/event-stream |
-| WebSockets | Both ways | Real-time collaboration, voice, many concurrent events |
-| Polling | — | Fallback only |
+**Transport:** a streaming HTTP response or SSE (server → client) is the default for AI chat; WebSockets only if you need two-way real-time (all options compared → Q187).
 
 **Server (Next.js route handler) — proxy the provider's stream:**
 
@@ -9942,9 +9967,484 @@ Long-running agent work runs in **background workers** via a queue (Q144), with 
 
 ---
 
-# Part 26 — HR & Behavioral
+# Part 26 — Assessments & Machine Coding
 
-### 197. Tell me about yourself
+### 197. Coding tasks I've been given in assessments — and where the answers are
+
+Tasks from my own interviews and assessment rounds, with the answer in this file:
+
+| Task I was given | Where | What they were checking |
+|---|---|---|
+| Reverse a string (without `reverse()`) | Q68 | Loops, string immutability, emoji-safe `[...str]` |
+| `isAnagram(a, b)` | Q79 | Frequency map, O(n) vs sorting O(n log n), clarifying case/spaces |
+| Second largest number in an array | Q73 | One-pass O(n), duplicates, `-Infinity`, returning `null` |
+| Remove duplicates from an array | Q75 | `Set`, O(n) vs O(n²), arrays of objects |
+| `Vehicle` → `TwoWheeler` / `FourWheeler` classes ("is this the right way?") | Q59 | `extends`, `super()`, redundant assignment, naming conventions, polymorphism |
+| TCS coding list (30 problems: palindrome, vowels, missing number, flatten, Fibonacci…) | Q67–Q79 | Basics done cleanly and quickly |
+
+**How to approach any live coding task:**
+1. **Restate and clarify** — input types, empty input, duplicates, case sensitivity, size of data.
+2. **Say the simple approach first**, with its complexity; then improve it.
+3. **Write clean code** — good names, small functions, no clever one-liners you can't explain.
+4. **Test out loud** with a normal case and edge cases (empty, one item, duplicates, negatives).
+5. **State time and space complexity.**
+6. Mention what you'd do in production (validation, TypeScript types, tests).
+
+### 198. Polyfills: write your own `map`, `filter`, `reduce`, `bind` and `Promise.all`
+
+A **polyfill** implements a built-in feature yourself. Interviewers use them to check that you understand how the built-ins really behave.
+
+**`Array.prototype.map`:**
+
+```js
+Array.prototype.myMap = function (callback, thisArg) {
+  if (typeof callback !== "function") throw new TypeError(`${callback} is not a function`);
+  const result = new Array(this.length);
+  for (let i = 0; i < this.length; i++) {
+    if (i in this) result[i] = callback.call(thisArg, this[i], i, this); // skip holes like the real map
+  }
+  return result;
+};
+
+[1, 2, 3].myMap(n => n * 2); // [2, 4, 6]
+```
+
+**`filter`:**
+
+```js
+Array.prototype.myFilter = function (callback, thisArg) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    if (i in this && callback.call(thisArg, this[i], i, this)) result.push(this[i]);
+  }
+  return result;
+};
+```
+
+**`reduce`** — the tricky part is the missing initial value:
+
+```js
+Array.prototype.myReduce = function (callback, initialValue) {
+  let i = 0;
+  let acc = initialValue;
+  if (arguments.length < 2) {                         // no initial value → use the first element
+    while (i < this.length && !(i in this)) i++;
+    if (i >= this.length) throw new TypeError("Reduce of empty array with no initial value");
+    acc = this[i++];
+  }
+  for (; i < this.length; i++) {
+    if (i in this) acc = callback(acc, this[i], i, this);
+  }
+  return acc;
+};
+
+[1, 2, 3].myReduce((s, n) => s + n);    // 6
+[].myReduce((s, n) => s + n, 0);        // 0
+```
+
+**`Function.prototype.bind`** (`this` rules → Q40, call/apply/bind → Q41):
+
+```js
+Function.prototype.myBind = function (context, ...boundArgs) {
+  const fn = this;
+  return function (...args) {
+    return fn.apply(context, [...boundArgs, ...args]); // supports partial application
+  };
+};
+
+function greet(greeting, mark) { return `${greeting}, ${this.name}${mark}`; }
+const hi = greet.myBind({ name: "Sam" }, "Hi");
+hi("!"); // "Hi, Sam!"
+```
+
+(Full spec detail: a real bound function used with `new` ignores the bound `this` — mention it if asked.)
+
+**`Promise.all`** (behaviour → Q50):
+
+```js
+function promiseAll(items) {
+  return new Promise((resolve, reject) => {
+    const results = [];
+    let done = 0;
+    if (items.length === 0) return resolve([]);
+
+    items.forEach((item, index) => {
+      Promise.resolve(item)                 // accept plain values too
+        .then(value => {
+          results[index] = value;           // keep ORIGINAL order, not finishing order
+          done++;
+          if (done === items.length) resolve(results);
+        })
+        .catch(reject);                     // first rejection rejects everything
+    });
+  });
+}
+
+await promiseAll([fetchUser(), 42, fetchOrders()]); // [user, 42, orders]
+```
+
+Common follow-ups: `Promise.allSettled` (never reject; collect `{ status, value | reason }`), `Promise.race` (resolve/reject with the first to settle), and limiting concurrency (run at most N promises at a time).
+
+**Concurrency limit (asked often for "fetch 100 URLs, max 5 at a time"):**
+
+```js
+async function mapLimit(items, limit, worker) {
+  const results = new Array(items.length);
+  let next = 0;
+  async function run() {
+    while (next < items.length) {
+      const i = next++;
+      results[i] = await worker(items[i], i);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, run));
+  return results;
+}
+
+await mapLimit(urls, 5, url => fetch(url).then(r => r.json()));
+```
+
+> **Interview answer:** A polyfill re-implements a built-in. For `map` and `filter` I loop over the array, call the callback with `(value, index, array)` and the right `this`, and skip holes; `reduce` must handle a missing initial value by starting from the first element and throwing on an empty array. `bind` returns a function that applies the original with the fixed `this` and pre-filled arguments. `Promise.all` resolves with results in input order once all resolve and rejects on the first failure.
+
+### 199. Implement it yourself: deep clone, memoize, once, EventEmitter, compose/pipe
+
+**Deep clone** (built-in `structuredClone` → Q46):
+
+```js
+function deepClone(value, seen = new WeakMap()) {
+  if (value === null || typeof value !== "object") return value;   // primitives, functions
+  if (value instanceof Date) return new Date(value);
+  if (value instanceof RegExp) return new RegExp(value.source, value.flags);
+  if (seen.has(value)) return seen.get(value);                      // circular references
+
+  const copy = Array.isArray(value) ? [] : Object.create(Object.getPrototypeOf(value));
+  seen.set(value, copy);
+
+  if (value instanceof Map) {
+    const m = new Map(); seen.set(value, m);
+    value.forEach((v, k) => m.set(deepClone(k, seen), deepClone(v, seen)));
+    return m;
+  }
+  if (value instanceof Set) {
+    const s = new Set(); seen.set(value, s);
+    value.forEach(v => s.add(deepClone(v, seen)));
+    return s;
+  }
+  for (const key of Reflect.ownKeys(value)) copy[key] = deepClone(value[key], seen);
+  return copy;
+}
+
+const a = { n: 1, nested: { x: [1, 2] }, when: new Date() };
+a.self = a;                      // circular
+const b = deepClone(a);
+b.nested.x.push(3);              // a.nested.x is still [1, 2]
+```
+
+**Memoize** (closures → Q39):
+
+```js
+function memoize(fn, keyFn = (...args) => JSON.stringify(args)) {
+  const cache = new Map();
+  return function (...args) {
+    const key = keyFn(...args);
+    if (cache.has(key)) return cache.get(key);
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+const slowSquare = n => { /* expensive */ return n * n; };
+const fastSquare = memoize(slowSquare);
+fastSquare(9); fastSquare(9); // second call from cache
+```
+
+Mention: unbounded caches leak memory → add a max size (LRU) or TTL; only memoize **pure** functions.
+
+**once** — run a function only the first time:
+
+```js
+function once(fn) {
+  let called = false, result;
+  return function (...args) {
+    if (!called) { called = true; result = fn.apply(this, args); }
+    return result;
+  };
+}
+const init = once(() => console.log("init")); init(); init(); // logs once
+```
+
+**EventEmitter** (Observer pattern):
+
+```js
+class EventEmitter {
+  #events = new Map();
+
+  on(event, listener) {
+    if (!this.#events.has(event)) this.#events.set(event, new Set());
+    this.#events.get(event).add(listener);
+    return () => this.off(event, listener);          // return an unsubscribe function
+  }
+
+  off(event, listener) {
+    this.#events.get(event)?.delete(listener);
+  }
+
+  once(event, listener) {
+    const wrapper = (...args) => { this.off(event, wrapper); listener(...args); };
+    return this.on(event, wrapper);
+  }
+
+  emit(event, ...args) {
+    for (const listener of [...(this.#events.get(event) ?? [])]) listener(...args); // copy: safe if listeners remove themselves
+    return this;
+  }
+}
+
+const bus = new EventEmitter();
+const stop = bus.on("order", o => console.log("got", o.id));
+bus.emit("order", { id: 1 }); // got 1
+stop();
+bus.emit("order", { id: 2 }); // nothing
+```
+
+**compose / pipe** (functional composition, currying → Q54):
+
+```js
+const pipe = (...fns) => input => fns.reduce((acc, fn) => fn(acc), input);        // left → right
+const compose = (...fns) => input => fns.reduceRight((acc, fn) => fn(acc), input); // right → left
+
+const slugify = pipe(s => s.trim(), s => s.toLowerCase(), s => s.replace(/\s+/g, "-"));
+slugify("  Hello World "); // "hello-world"
+```
+
+**Also commonly asked:** `debounce` and `throttle` (Q55), `sleep(ms)` (`new Promise(r => setTimeout(r, ms))`), `retry(fn, times)` with backoff, `get(obj, "a.b.c")` safe path access, `chunk(arr, size)`.
+
+> **Interview answer:** For deep clone I recurse through objects and arrays, handle Dates, Maps, Sets and circular references with a WeakMap — in real code I'd use `structuredClone`. Memoize and once are closures holding a cache or a flag; an EventEmitter keeps a map of event names to listener sets with on, off, once and emit; and pipe/compose chain functions with `reduce`. I always mention edge cases like memory growth and circular data.
+
+### 200. Output-prediction questions (what does this print?)
+
+Interviewers paste a snippet and ask for the output. Explain **why**, not just the answer. (Already covered elsewhere, so not repeated here: closures in loops → Q39, event-loop ordering → Q51, `this` in callbacks → Q40, hoisting traps → Q38, `==` coercion → Q33.)
+
+**1. Type coercion:**
+
+```js
+console.log(typeof NaN);        // "number"
+console.log(0.1 + 0.2 === 0.3); // false — floating point (0.30000000000000004); compare with Math.abs(a - b) < Number.EPSILON
+console.log("5" + 3);           // "53"  — + with a string concatenates
+console.log("5" - 3);           // 2     — - converts to numbers
+console.log([] + []);           // ""    — both become empty strings
+console.log([1, 2] + [3]);      // "1,23"
+console.log(true + true);       // 2
+console.log(null + 1);          // 1     — null → 0
+console.log(undefined + 1);     // NaN
+```
+
+**2. Object keys are strings:**
+
+```js
+const a = {};
+const b = { key: "b" };
+const c = { key: "c" };
+a[b] = 123;               // key becomes "[object Object]"
+a[c] = 456;               // same key!
+console.log(a[b]);        // 456
+```
+
+Fix: use a `Map` for object keys.
+
+**3. `Array` constructor and `fill` with objects:**
+
+```js
+console.log(new Array(3));        // [ <3 empty items> ] — one number = length
+console.log(new Array(3, 4));     // [3, 4]
+console.log(Array.of(3));         // [3]
+
+const grid = new Array(2).fill([]); // the SAME array object in both slots
+grid[0].push("x");
+console.log(grid);                  // [["x"], ["x"]]
+// fix: Array.from({ length: 2 }, () => [])
+```
+
+**4. Promise chain with an error:**
+
+```js
+Promise.resolve(1)
+  .then(x => x + 1)
+  .then(() => { throw new Error("boom"); })
+  .then(() => console.log("skipped"))          // skipped — the chain jumps to the next catch
+  .catch(e => { console.log(e.message); return 10; })
+  .then(x => console.log(x));
+// "boom", then 10 — catch returns a value, so the chain continues as fulfilled
+```
+
+**5. `map(parseInt)`:**
+
+```js
+console.log(["1", "2", "3"].map(parseInt)); // [1, NaN, NaN]
+// map passes (value, index): parseInt("1", 0) → 1, parseInt("2", 1) → NaN (radix 1), parseInt("3", 2) → NaN
+// fix: ["1", "2", "3"].map(Number) or .map(s => parseInt(s, 10))
+```
+
+**6. Sparse arrays:**
+
+```js
+const arr = [1, 2, 3];
+arr[10] = 11;
+console.log(arr.length);                        // 11
+console.log(arr.filter(() => true).length);     // 4 — filter/forEach/map skip empty slots
+console.log(arr[5]);                            // undefined
+```
+
+**7. Strings are immutable, conversions are surprising:**
+
+```js
+const s = "abc";
+s[0] = "z";
+console.log(s);              // "abc" — can't change a string in place
+console.log(Number(""));     // 0
+console.log(Number("12px")); // NaN
+console.log(parseInt("12px")); // 12 — parses until the first invalid character
+console.log(!!"0", !!0);     // true false — a non-empty string is truthy
+```
+
+**8. `const` with objects:**
+
+```js
+const cfg = { debug: false };
+cfg.debug = true;           // ✅ allowed
+Object.freeze(cfg);
+cfg.debug = false;          // silently ignored (TypeError in strict mode)
+console.log(cfg.debug);     // true
+```
+
+**Tips:** read line by line, track which code is synchronous, which is a microtask (promises, `await`) and which is a macrotask (`setTimeout`); for coercion remember `+` with a string concatenates and other operators convert to numbers.
+
+### 201. React machine-coding round: build a searchable, paginated user table
+
+A typical 60–90 minute practical: *"Fetch users from an API, show them in a table with search, sorting and pagination, with loading, error and empty states."*
+
+**Plan before coding (say it out loud):**
+1. Components: `UserTable` (container) → `SearchBox`, `Table`, `Pagination`.
+2. State: `query`, `page`, `sort`; derived: filtered/sorted/paged rows.
+3. Data: fetch once (small list) **or** server-side search/pagination (large list — Q139).
+4. States: loading, error with retry, empty.
+5. Then polish: debounce, accessibility, URL params, tests.
+
+**Solution (client-side version, TypeScript):**
+
+```tsx
+import { useEffect, useMemo, useState } from "react";
+
+type User = { id: number; name: string; email: string; company: { name: string } };
+type SortKey = "name" | "email";
+const PAGE_SIZE = 5;
+
+function useDebounce<T>(value: T, delay = 300) {           // (Q109)
+  const [v, setV] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setV(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return v;
+}
+
+export default function UserTable() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [status, setStatus] = useState<"loading" | "error" | "ready">("loading");
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: "name", dir: 1 });
+  const [page, setPage] = useState(1);
+  const debouncedQuery = useDebounce(query);
+
+  const load = () => {
+    setStatus("loading");
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+      .then((data: User[]) => { setUsers(data); setStatus("ready"); })
+      .catch(() => setStatus("error"));
+  };
+  useEffect(load, []);
+
+  useEffect(() => setPage(1), [debouncedQuery, sort]);    // new search/sort → back to page 1
+
+  const rows = useMemo(() => {                             // derived, not stored in state (Q104)
+    const q = debouncedQuery.trim().toLowerCase();
+    return users
+      .filter(u => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q))
+      .sort((a, b) => a[sort.key].localeCompare(b[sort.key]) * sort.dir);
+  }, [users, debouncedQuery, sort]);
+
+  const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const pageRows = rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  const toggleSort = (key: SortKey) =>
+    setSort(s => ({ key, dir: s.key === key ? ((-s.dir) as 1 | -1) : 1 }));
+
+  if (status === "loading") return <p role="status">Loading users…</p>;
+  if (status === "error") return <p role="alert">Couldn't load users. <button onClick={load}>Retry</button></p>;
+
+  return (
+    <section>
+      <label htmlFor="search">Search users</label>
+      <input id="search" type="search" value={query} onChange={e => setQuery(e.target.value)} />
+
+      {pageRows.length === 0 ? (
+        <p>No users match “{debouncedQuery}”.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              {(["name", "email"] as SortKey[]).map(key => (
+                <th key={key} aria-sort={sort.key === key ? (sort.dir === 1 ? "ascending" : "descending") : "none"}>
+                  <button onClick={() => toggleSort(key)}>
+                    {key} {sort.key === key ? (sort.dir === 1 ? "▲" : "▼") : ""}
+                  </button>
+                </th>
+              ))}
+              <th>Company</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pageRows.map(u => (
+              <tr key={u.id}>
+                <td>{u.name}</td>
+                <td>{u.email}</td>
+                <td>{u.company.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      <nav aria-label="Pagination">
+        <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>Previous</button>
+        <span> Page {page} of {totalPages} </span>
+        <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
+      </nav>
+    </section>
+  );
+}
+```
+
+**What the evaluator looks for:**
+- Clean component and state design — **derived data computed, not duplicated in state**.
+- All states handled: loading, error + retry, empty.
+- Debounced search, page reset on new search/sort, disabled buttons at the ends.
+- Stable `key`s, accessible labels, `aria-sort`, buttons (not clickable `<th>`s).
+- TypeScript types for API data.
+- Talking through **what changes for 100,000 users**: server-side search/sort/pagination with query params (`?q=&sort=&page=`), abort stale requests, React Query caching, virtualization (Q178).
+- If time allows: filters/sort in the URL, a custom `useUsers` hook, a couple of React Testing Library tests (Q130).
+
+**Other common machine-coding tasks:** todo app with filters and localStorage, infinite scroll feed, autocomplete with keyboard navigation, star rating, modal/accordion/tabs (accessible — Q113), countdown timer/stopwatch, nested comments, file-explorer tree, multi-step form with validation, shopping cart.
+
+**Tips:** get a working version first, then improve; commit to a simple structure; keep talking; leave 10 minutes to test edge cases and explain trade-offs.
+
+---
+
+# Part 27 — HR & Behavioral
+
+### 202. Tell me about yourself
 
 Structure — **Present → Past → Strengths → Why this role** (60–90 seconds, not your whole CV):
 
@@ -9953,19 +10453,9 @@ Structure — **Present → Past → Strengths → Why this role** (60–90 seco
 3. **Strengths:** what you're known for — e.g. performance, ownership, mentoring.
 4. **Why here:** connect to the job description.
 
-**Template (replace the brackets with your real details):**
-
-> I'm a full-stack developer with [7+] years of experience, mainly in React, Next.js, TypeScript and Node.js. Currently at [company], I work on [product/domain], where I [main responsibility — e.g. own the frontend architecture and build REST APIs].
->
-> One project I'm proud of is [project], where I [what you built] — it [result: improved load time by X%, handled Y users, reduced bugs].
->
-> Outside work I build [ImgKit, a set of in-browser image tools] — which keeps me hands-on with performance and modern browser APIs.
->
-> I enjoy owning features end to end and helping teammates with code reviews and React best practices. This role fits well because [it needs independent React work and guiding the team — which is what I've been doing].
-
 Avoid: personal life story, reading your CV line by line, negativity about your current employer.
 
-**Lead-role version (add to the template):**
+**Lead-role version (add to your intro):**
 
 > Along with hands-on development, I mentor developers, review code and architecture, break requirements into tasks and make sure the team delivers on time. I'm looking for a lead role where I stay technical while owning architecture, delivery and team growth.
 
@@ -9975,13 +10465,13 @@ Avoid: personal life story, reading your CV line by line, negativity about your 
 
 > Hi, I'm Jaydip Patel, a Full Stack Developer with 7+ years of experience. My core stack is React.js, Next.js, Node.js, TypeScript, MongoDB and REST APIs, and I've also worked extensively on Web3 and blockchain projects with Solidity. Recently I've been building scalable web applications, backend APIs, third-party integrations and AI-powered features — and I built and launched ImgKit, an image-tools platform with around 70 browser-based tools, also published on the Microsoft Store. I enjoy solving hard technical problems and building clean, reusable, scalable solutions. I'm now looking for a senior role where I can own important parts of the product and keep growing with the team.
 
-(For lead roles, swap the last sentence for the lead-role version below.)
+(For lead roles, swap the last sentence for the lead-role version above.)
 
 **Positioning for senior roles:** don't call yourself "a React developer". Say **"Senior Frontend / Full-Stack Engineer — React, Next.js and TypeScript — who owns frontend architecture, UX, APIs, performance and production deployment."** That matches what senior job descriptions ask for.
 
 > **Tip:** practise it out loud until it sounds natural — it sets the tone for the whole interview.
 
-### 198. Explain your project / architecture
+### 203. Explain your project / architecture
 
 Interviewers want to see **ownership and depth**, not a list of technologies. Prepare one strong project for 2–3 minutes:
 
@@ -10021,7 +10511,7 @@ Be ready for deep follow-ups on anything you mention: "Why Redux over Context?",
 
 Adapt the length to the question; check the current tool count before the interview.
 
-### 199. Tell me about a difficult technical problem you solved
+### 204. Tell me about a difficult technical problem you solved
 
 Use **STAR**: **S**ituation → **T**ask → **A**ction (most detail, say "I") → **R**esult (measurable).
 
@@ -10036,7 +10526,7 @@ Good topics: performance, a production outage, a tricky bug (race condition, mem
 
 Always end with **what you learned** or what you changed in the process to prevent it again.
 
-### 200. How do you review code and ensure code quality?
+### 205. How do you review code and ensure code quality?
 
 **What I check in a pull request (in priority order):**
 1. **Correctness** — does it meet the requirement? Edge cases (empty, null, errors, slow network)?
@@ -10062,7 +10552,7 @@ Always end with **what you learned** or what you changed in the process to preve
 
 > **Interview answer:** I review for correctness and edge cases first, then readability, React-specific issues, security, performance and tests. Feedback is specific, explains why, suggests alternatives and marks what's blocking vs a nit. I automate quality with TypeScript, ESLint, Prettier, pre-commit hooks and CI so reviews focus on logic and design.
 
-### 201. How do you handle a disagreement with a teammate?
+### 206. How do you handle a disagreement with a teammate?
 
 **Approach:**
 1. **Listen first** — understand their reasoning; they may know something I don't.
@@ -10077,7 +10567,7 @@ Always end with **what you learned** or what you changed in the process to preve
 
 > **Interview answer:** I listen to understand their reasoning, then compare options with data or a quick prototype, keeping the focus on the project goal. If we still disagree, we escalate to the lead or follow team standards — and once decided, I fully support the decision.
 
-### 202. How do you guide or mentor junior developers?
+### 207. How do you guide or mentor junior developers?
 
 Especially relevant when the JD says *"ability to guide other resources"*.
 
@@ -10095,7 +10585,7 @@ Especially relevant when the JD says *"ability to guide other resources"*.
 
 > **Interview answer:** I guide juniors through onboarding, pair programming and teaching-focused code reviews, give them tasks that stretch them gradually, share knowledge through docs and short sessions, and check in regularly — the goal is to make them independent, not dependent on me.
 
-### 203. How do you work in Agile/Scrum, and how do you estimate tasks?
+### 208. How do you work in Agile/Scrum, and how do you estimate tasks?
 
 **Scrum basics:**
 
@@ -10120,7 +10610,7 @@ Artifacts: **user stories** with **acceptance criteria**, product backlog, sprin
 
 > **Interview answer:** I've worked in Scrum with two-week sprints — planning, daily stand-ups, reviews and retrospectives, with stories tracked in Jira. To estimate, I clarify requirements, break the feature into components, state, API work, edge cases and tests, estimate each part with a buffer for unknowns, and flag risks early if anything changes.
 
-### 204. How do you handle a production bug?
+### 209. How do you handle a production bug?
 
 **Step by step:**
 1. **Assess impact** — how many users? Is it blocking payments/login? Sets the priority.
@@ -10137,7 +10627,7 @@ Artifacts: **user stories** with **acceptance criteria**, product backlog, sprin
 
 > **Interview answer:** I assess impact, inform the team, reproduce using monitoring and logs, and mitigate fast — rollback or feature flag — before fixing the root cause with a test. After deploying and verifying, we do a blameless post-mortem to prevent it happening again.
 
-### 205. How do you prioritise tasks and work with designers/product?
+### 210. How do you prioritise tasks and work with designers/product?
 
 **Prioritising multiple tasks:**
 - Order by **impact and urgency**: production issues → sprint commitments → blockers for teammates → improvements.
@@ -10145,16 +10635,11 @@ Artifacts: **user stories** with **acceptance criteria**, product backlog, sprin
 - Break work into small deliverable pieces; finish before starting new work.
 - Communicate early if something will slip, with options (reduce scope, extend date).
 
-**Working with designers:**
-- Review designs **before** building — ask about responsive behaviour, empty/loading/error states, hover/focus states, accessibility.
-- Push back early, with reasons, if something is very costly to build — offer an alternative.
-- Use a **design system** / shared components so UI stays consistent.
-- Share work early (preview deploys, Storybook) for feedback rather than at the end.
-- Figma dev mode for exact spacing, tokens and assets.
+**Working with designers:** review designs before building, push back early with an alternative when something is costly, and share work early through preview deploys (full approach → Q116).
 
 > **Interview answer:** I prioritise by impact and urgency — production issues and sprint commitments first — and check with the lead or product owner when priorities conflict, communicating early if anything slips. With designers I review designs before coding, ask about states and responsiveness, suggest alternatives when something is costly, and share work early through preview deploys.
 
-### 206. A developer wants to add a new library. How do you decide?
+### 211. A developer wants to add a new library. How do you decide?
 
 **Questions I ask:**
 1. **Does it solve a real problem** we have now? Can we do it with what we already use or a few lines of code?
@@ -10171,7 +10656,7 @@ Artifacts: **user stories** with **acceptance criteria**, product backlog, sprin
 
 > **Interview answer:** I check whether it solves a real problem we can't reasonably solve already, then evaluate bundle size, maintenance activity, adoption, TypeScript support, security, license and compatibility with our stack, plus how hard it would be to remove later. For significant additions I do a quick spike and record the decision so the team agrees — I don't add dependencies just because they're popular.
 
-### 207. How do you use AI tools like Claude in development?
+### 212. How do you use AI tools like Claude in development?
 
 As an **accelerator with review**, not an autopilot.
 
@@ -10195,7 +10680,7 @@ As an **accelerator with review**, not an autopilot.
 
 > **Interview answer:** I use AI tools like Claude to speed up exploration, boilerplate, refactoring, debugging, tests and documentation, but I review everything — especially security, performance and business logic — run tests and type checks, verify APIs against docs, and never share confidential data. The tool drafts; I own the result.
 
-### 208. What does first-principles thinking mean in software engineering?
+### 213. What does first-principles thinking mean in software engineering?
 
 Break a problem down to its **fundamental facts and requirements** and reason up from there — instead of copying the familiar solution or the latest trend.
 
@@ -10224,7 +10709,7 @@ How I apply it:
 
 > **Interview answer:** First-principles thinking means breaking a problem down to its basic facts and requirements instead of reaching for a familiar or trendy solution. If a dashboard is slow, I don't jump to "add Redis" — I measure network, API, database and rendering, find the real bottleneck, apply the simplest fix and verify it with data.
 
-### 209. How do you feel about compensation that includes equity?
+### 214. How do you feel about compensation that includes equity?
 
 Asked by startups and fast-growing companies: *"What are your thoughts on working with a fast-growing, purpose-driven company where compensation may include equity as a long-term value proposition?"*
 
@@ -10242,7 +10727,7 @@ What they're checking: are you motivated by the mission and long-term growth, or
 
 **Avoid:** "I only care about salary" or "equity is just paper money" — and equally, don't accept a much lower base for equity without knowing the terms.
 
-### 210. Why are you looking for a change?
+### 215. Why are you looking for a change?
 
 Keep it **positive and forward-looking** — about what you want next, not what's wrong where you are.
 
@@ -10257,7 +10742,7 @@ Variations:
 
 If there's a **career gap** or a short stint, give one honest sentence and move to what you did during it (e.g. building and launching your own product).
 
-### 211. What do you say when you don't know the answer (e.g. an AWS or Kubernetes question)?
+### 216. What do you say when you don't know the answer (e.g. an AWS or Kubernetes question)?
 
 **Don't bluff** — interviewers ask follow-ups and a made-up "production experience" falls apart fast. Show how you **think** instead.
 
@@ -10279,9 +10764,9 @@ Honesty plus clear reasoning scores better than a confident wrong answer.
 
 ---
 
-# Part 27 — Leadership & Management
+# Part 28 — Leadership & Management
 
-### 212. Senior Developer vs Tech Lead — and what is your leadership style?
+### 217. Senior Developer vs Tech Lead — and what is your leadership style?
 
 | Senior Developer | Tech Lead (adds) |
 |---|---|
@@ -10306,7 +10791,7 @@ Engineering Manager (where it exists) owns hiring, career growth and performance
 
 > **Interview answer:** A senior developer solves hard problems and delivers excellent code; a tech lead is also accountable for the team's technical direction, quality and delivery — architecture decisions, standards, mentoring, task breakdown, removing blockers and communicating risk. My style is hands-on and outcome-driven: clear priorities and ownership, regular one-to-ones, fast unblocking, and autonomy over how work gets done rather than micromanagement.
 
-### 213. A developer keeps missing deadlines. What do you do?
+### 218. A developer keeps missing deadlines. What do you do?
 
 **1. Talk privately (1:1), don't blame.** Understand the **root cause** first:
 
@@ -10328,7 +10813,7 @@ Engineering Manager (where it exists) owns hiring, career growth and performance
 
 > **Interview answer:** I'd have a private one-to-one to find the root cause — unclear requirements, poor estimates, a skill gap, overload, blockers or a personal issue — then agree a specific plan: smaller tasks, pairing or mentoring, rebalanced work and regular checkpoints. I follow up and recognise progress; if it still doesn't improve with clear expectations and support, I follow the formal performance process.
 
-### 214. Two team members are in conflict, or disagree on architecture. How do you handle it?
+### 219. Two team members are in conflict, or disagree on architecture. How do you handle it?
 
 **Interpersonal conflict:**
 1. **Address it early** — small friction becomes team-wide damage.
@@ -10337,18 +10822,11 @@ Engineering Manager (where it exists) owns hiring, career growth and performance
 4. Focus on **behaviour and work**, not personalities. Agree how they'll work together going forward.
 5. Follow up; escalate to manager/HR if it's serious (harassment, repeated behaviour).
 
-**Technical disagreement (e.g. two architecture proposals):**
-1. Ask each to present their option with **trade-offs**: complexity, performance, scalability, security, maintenance cost, team familiarity, time to deliver.
-2. Compare against the **actual requirements**, not preferences.
-3. If unclear, do a **small proof of concept** or spike with real measurements.
-4. **Decide** — as lead, I make the call when consensus doesn't come, explain the reasoning, and record it (short ADR — architecture decision record).
-5. Everyone **commits** to the decision; revisit only if new facts appear.
-
-(Disagreeing with a peer yourself → Q201.)
+**Technical disagreement (e.g. two architecture proposals):** use the same steps as Q206 — trade-offs against real requirements, a quick proof of concept if unclear. What's different as the lead: **I make the final call** when consensus doesn't come, explain the reasoning, record it in a short ADR (architecture decision record), and everyone commits — we revisit only if new facts appear.
 
 > **Interview answer:** I address conflict early — first individually to understand each side, then together around facts, impact and options — focusing on the work, not personalities. For technical disagreements I ask each person to lay out trade-offs against real requirements, use a quick proof of concept if needed, then make and document the decision so the team commits to it. The goal isn't a winner, it's the team working well again.
 
-### 215. How do you handle a developer who is technically stronger than you?
+### 220. How do you handle a developer who is technically stronger than you?
 
 That's a **good thing** — a lead doesn't need to be the best at every technology.
 
@@ -10360,7 +10838,7 @@ That's a **good thing** — a lead doesn't need to be the best at every technolo
 
 > **Interview answer:** I see it as a strength for the team. I'd give them ownership where they're strongest, have them mentor others and learn from them myself. My responsibility as lead is the environment, alignment with business goals, standards, unblocking and delivery — not being the best coder in every area.
 
-### 216. The team is going to miss a deadline, or you're pressured to deliver faster. What do you do?
+### 221. The team is going to miss a deadline, or you're pressured to deliver faster. What do you do?
 
 **Communicate early** — a risk raised 2 weeks before the deadline is a planning decision; raised on the deadline day it's a failure.
 
@@ -10374,7 +10852,7 @@ That's a **good thing** — a lead doesn't need to be the best at every technolo
 
 **4. Protect the team** — no unrealistic overtime as the default plan; occasional extra effort only when agreed and temporary.
 
-**5. If we take shortcuts, record them as technical debt** with a plan to fix (Q218).
+**5. If we take shortcuts, record them as technical debt** with a plan to fix (Q223).
 
 **6. Retrospective afterwards** — why did we slip, and what changes in estimation/planning.
 
@@ -10382,7 +10860,7 @@ Note: adding people late often slows a project down (ramp-up + communication ove
 
 > **Interview answer:** I flag the risk as early as I see it, work out the remaining work and critical path, and separate must-haves from nice-to-haves with the product owner. Then I give stakeholders concrete options — reduce scope, move the date, or add help where it actually works — rather than silently cutting quality or relying on overtime. Any shortcuts are logged as technical debt, and we review the cause in the retrospective.
 
-### 217. How do you report progress to a project manager or stakeholders?
+### 222. How do you report progress to a project manager or stakeholders?
 
 **Short, structured, honest:**
 
@@ -10398,13 +10876,13 @@ Note: adding people late often slows a project down (ramp-up + communication ove
 Principles:
 - **Lead with what they need to decide or act on** (blockers, risks), not a list of every task.
 - Use their language — features and business impact, not "refactored the reducer".
-- **Bad news early**, always with options (Q216).
+- **Bad news early**, always with options (Q221).
 - Same format every time (daily stand-up summary, weekly email/Slack update, sprint review demo).
 - Keep the board (Jira) accurate so status is visible without asking.
 
 > **Interview answer:** I report in a consistent, short format — done, in progress, blocked, risks, ETA and what I need from them — in business terms. Risks and blockers go first and early, always with options, and the task board stays accurate so status is never a surprise.
 
-### 218. How do you handle technical debt?
+### 223. How do you handle technical debt?
 
 **Technical debt** = shortcuts or outdated code that make future changes slower or riskier (duplicated logic, missing tests, outdated libraries, tangled modules).
 
@@ -10422,7 +10900,7 @@ Don't do **big-bang rewrites** without strong reason — they usually take far l
 
 > **Interview answer:** I treat technical debt as a business trade-off: sometimes worth taking deliberately, but always tracked. I log it with its impact, prioritise by how much it slows us down or risks production, reserve regular sprint capacity to pay it down, refactor incrementally with tests rather than big rewrites, and prevent new debt through reviews and standards.
 
-### 219. What is a skill matrix and how would you use it?
+### 224. What is a skill matrix and how would you use it?
 
 A table of **who knows what, and how well**, across the team's key skills:
 
@@ -10440,7 +10918,7 @@ Often scored 1–4 (aware → can work with help → independent → can teach).
 **Uses:**
 - **Bus factor / single points of failure** — if only Dev B knows AWS deployments, that's a risk → pair someone with them.
 - **Training plans** and growth goals in 1:1s.
-- **Work allocation** — mix stretch tasks with safe ones (Q220).
+- **Work allocation** — mix stretch tasks with safe ones (Q225).
 - **Backups** for leave and on-call.
 - **Hiring** — which skills the team actually lacks.
 
@@ -10448,7 +10926,7 @@ Fill it in **with** the developers (self-assessment + discussion) and update it 
 
 > **Interview answer:** A skill matrix maps each team member's level across key skills. I use it to spot single points of failure, plan training and pairing, allocate work and backups, and guide hiring. It's built together with the team and updated regularly — a planning tool, not a ranking.
 
-### 220. You have 5 developers — one strong, two average, two junior — and a critical project with a tight deadline. How do you assign the work?
+### 225. You have 5 developers — one strong, two average, two junior — and a critical project with a tight deadline. How do you assign the work?
 
 **Principles:**
 - Don't put **all** critical knowledge on the strongest developer (bottleneck + bus factor).
@@ -10469,11 +10947,11 @@ Fill it in **with** the developers (self-assessment + discussion) and update it 
 
 **Process:** kickoff with clear scope and acceptance criteria → API contract agreed day 1 → short daily stand-ups → mid-sprint integration checkpoint → demo early to stakeholders → keep a buffer for testing and bug fixes.
 
-Scope risks early: what can be dropped if we fall behind (Q216).
+Scope risks early: what can be dropped if we fall behind (Q221).
 
 > **Interview answer:** The strong developer owns architecture and the riskiest module and mentors others; the two average developers own core backend and frontend modules; the juniors take well-defined UI, integration and testing tasks, each paired with someone. We agree API contracts on day one so work runs in parallel, use frequent checkpoints, and I focus on unblocking, reviews and stakeholder communication — without making one person the single point of failure.
 
-### 221. Why should we hire you for this lead role?
+### 226. Why should we hire you for this lead role?
 
 Structure: **technical depth + delivery + people + fit to this JD** — with proof.
 
@@ -10487,7 +10965,7 @@ Structure: **technical depth + delivery + people + fit to this JD** — with pro
 
 Back each claim with a short story ready (mentoring, an architecture decision, a production incident, a tight deadline).
 
-### 222. What questions should you ask the interviewer?
+### 227. What questions should you ask the interviewer?
 
 Always ask 2–4 — it shows seriousness and helps you judge the role.
 
@@ -10510,6 +10988,8 @@ Always ask 2–4 — it shows seriousness and helps you judge the role.
 - Why is this position open?
 
 Avoid asking first about salary, leave or work-from-home in technical rounds — save those for HR.
+
+---
 
 ---
 
@@ -10863,6 +11343,16 @@ A 15–20 minute read before an interview. Same order as the file.
 | RAG vs fine-tuning vs tools | Knowledge → RAG · live data/actions/exact maths → tools · behaviour/style → fine-tune |
 | LLM gateway | One API to many models (OpenRouter): routing by task, fallbacks, cost tracking — keys server-side |
 | Agent runtime | Runs the loop: model → tool → result → repeat; RAG = knowledge, tools = actions |
+
+### Assessments & Machine Coding
+| Topic | One-liner |
+|---|---|
+| Live coding approach | Clarify → simple solution + complexity → improve → test edge cases out loud |
+| Polyfills | `map`/`filter` skip holes + `thisArg`; `reduce` without initial value; `bind` = apply with fixed `this`; `Promise.all` keeps input order |
+| Concurrency limit | N workers pulling from a shared index, `Promise.all` over the workers |
+| Implement yourself | Deep clone (WeakMap for cycles), memoize, once, EventEmitter, pipe/compose |
+| Output traps | `0.1+0.2`, object keys stringify, `map(parseInt)`, sparse arrays, `fill([])` shares one array |
+| Machine-coding table | Fetch + loading/error/empty, debounced search, sort, pagination, derived data via `useMemo`, a11y |
 
 ### HR
 | Topic | One-liner |
